@@ -29,7 +29,6 @@ import {
 } from '@pnpm/types'
 import rimraf = require('@zkochan/rimraf')
 import loadJsonFile = require('load-json-file')
-import makeDir = require('make-dir')
 import * as fs from 'mz/fs'
 import PQueue from 'p-queue'
 import path = require('path')
@@ -484,7 +483,7 @@ function fetchToStore (
       }
 
       const unpacked = path.join(target, 'node_modules', pkgName)
-      await makeDir(path.dirname(unpacked))
+      await fs.mkdir(path.dirname(unpacked), { recursive: true })
 
       // rename(oldPath, newPath) is an atomic operation, so we do it at the
       // end

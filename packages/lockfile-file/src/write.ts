@@ -2,12 +2,15 @@ import { WANTED_LOCKFILE } from '@pnpm/constants'
 import { Lockfile } from '@pnpm/lockfile-types'
 import { DEPENDENCIES_FIELDS } from '@pnpm/types'
 import rimraf = require('@zkochan/rimraf')
+import fs = require('graceful-fs')
 import yaml = require('js-yaml')
-import makeDir = require('make-dir')
 import path = require('path')
 import R = require('ramda')
+import { promisify } from 'util'
 import writeFileAtomicCB = require('write-file-atomic')
 import logger from './logger'
+
+const mkdir = promisify(fs.mkdir)
 
 function writeFileAtomic (filename: string, data: string) {
   return new Promise((resolve, reject) => writeFileAtomicCB(filename, data, {}, (err?: Error) => err ? reject(err) : resolve()))
@@ -37,7 +40,7 @@ export async function writeCurrentLockfile (
     forceSharedFormat?: boolean,
   },
 ) {
-  await makeDir(virtualStoreDir)
+  await mkdir(virtualStoreDir, { recursive: true })
   return writeLockfile('lock.yaml', virtualStoreDir, currentLockfile, opts)
 }
 
@@ -135,7 +138,7 @@ export default function writeLockfiles (
     return Promise.all([
       writeFileAtomic(wantedLockfilePath, yamlDoc),
       (async () => {
-        await makeDir(path.dirname(currentLockfilePath))
+        await mkdir(path.dirname(currentLockfilePath), { recursive: true })
         await writeFileAtomic(currentLockfilePath, yamlDoc)
       })(),
     ])
@@ -151,7 +154,7 @@ export default function writeLockfiles (
   return Promise.all([
     writeFileAtomic(wantedLockfilePath, yamlDoc),
     (async () => {
-      await makeDir(path.dirname(currentLockfilePath))
+      await mkdir(path.dirname(currentLockfilePath), { recursive: true })
       await writeFileAtomic(currentLockfilePath, currentYamlDoc)
     })(),
   ])

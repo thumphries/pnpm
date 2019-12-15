@@ -2,9 +2,8 @@ import PnpmError from '@pnpm/error'
 import { FetchResult, FilesIndex } from '@pnpm/fetcher-base'
 import logger from '@pnpm/logger'
 import createFetcher from 'fetch-from-npm-registry'
-import fs = require('graceful-fs')
 import { IncomingMessage } from 'http'
-import makeDir = require('make-dir')
+import fs = require('mz/fs')
 import path = require('path')
 import pathTemp = require('path-temp')
 import retry = require('retry')
@@ -133,7 +132,7 @@ export default (
     generatePackageIntegrity?: boolean,
   }): Promise<FetchResult> {
     const saveToDir = path.dirname(saveto)
-    await makeDir(saveToDir)
+    await fs.mkdir(saveToDir, { recursive: true })
 
     // If a tarball is hosted on a different place than the manifest, only send
     // credentials on `alwaysAuth`
@@ -207,7 +206,7 @@ export default (
             if (integrityCheckResult !== true) {
               throw integrityCheckResult
             }
-            fs.rename(tempTarballLocation, saveto, () => {
+            fs.rename(tempTarballLocation, saveto).catch(() => {
               // ignore errors
             })
             resolve({ tempLocation, filesIndex: filesIndex as FilesIndex })

@@ -1,7 +1,6 @@
 import PnpmError from '@pnpm/error'
 import { recursive } from '@pnpm/plugin-commands-recursive'
 import { preparePackages } from '@pnpm/prepare'
-import makeDir = require('make-dir')
 import fs = require('mz/fs')
 import path = require('path')
 import test = require('tape')
@@ -158,7 +157,7 @@ test('running `pnpm recursive` only for packages in subdirectories of cwd', asyn
     }
   ])
 
-  await makeDir('node_modules')
+  await fs.mkdir('node_modules', { recursive: true })
   process.chdir('packages')
 
   await recursive.handler(['install'], {

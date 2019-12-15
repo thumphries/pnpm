@@ -6,12 +6,12 @@ import prepare, { tempDir } from '@pnpm/prepare'
 import { REGISTRY_MOCK_PORT } from '@pnpm/registry-mock'
 import { stripIndent } from 'common-tags'
 import fs = require('fs')
-import makeDir = require('make-dir')
 import path = require('path')
 import stripAnsi = require('strip-ansi')
 import test = require('tape')
 import { promisify } from 'util'
 
+const mkdir = promisify(fs.mkdir)
 const copyFile = promisify(fs.copyFile)
 const fixtures = path.join(__dirname, '../../../fixtures')
 const hasOutdatedDepsFixture = path.join(fixtures, 'has-outdated-deps')
@@ -40,7 +40,7 @@ const OUTDATED_OPTIONS = {
 test('pnpm outdated: show details', async (t) => {
   tempDir(t)
 
-  await makeDir(path.resolve('node_modules/.pnpm'))
+  await mkdir(path.resolve('node_modules/.pnpm'), { recursive: true })
   await copyFile(path.join(hasOutdatedDepsFixture, 'node_modules/.pnpm/lock.yaml'), path.resolve('node_modules/.pnpm/lock.yaml'))
   await copyFile(path.join(hasOutdatedDepsFixture, 'package.json'), path.resolve('package.json'))
 
@@ -70,7 +70,7 @@ test('pnpm outdated: show details', async (t) => {
 test('pnpm outdated: no table', async (t) => {
   tempDir(t)
 
-  await makeDir(path.resolve('node_modules/.pnpm'))
+  await mkdir(path.resolve('node_modules/.pnpm'), { recursive: true })
   await copyFile(path.join(hasOutdatedDepsFixture, 'node_modules/.pnpm/lock.yaml'), path.resolve('node_modules/.pnpm/lock.yaml'))
   await copyFile(path.join(hasOutdatedDepsFixture, 'package.json'), path.resolve('package.json'))
 
@@ -124,7 +124,7 @@ test('pnpm outdated: no table', async (t) => {
 test('pnpm outdated: only current lockfile is available', async (t) => {
   tempDir(t)
 
-  await makeDir(path.resolve('node_modules/.pnpm'))
+  await mkdir(path.resolve('node_modules/.pnpm'), { recursive: true })
   await copyFile(path.join(hasOutdatedDepsFixture, 'node_modules/.pnpm/lock.yaml'), path.resolve('node_modules/.pnpm/lock.yaml'))
   await copyFile(path.join(hasOutdatedDepsFixture, 'package.json'), path.resolve('package.json'))
 

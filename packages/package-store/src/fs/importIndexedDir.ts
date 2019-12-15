@@ -1,6 +1,5 @@
 import pnpmLogger, { globalWarn } from '@pnpm/logger'
 import rimraf = require('@zkochan/rimraf')
-import makeDir = require('make-dir')
 import fs = require('mz/fs')
 import path = require('path')
 import pathTemp = require('path-temp')
@@ -29,7 +28,7 @@ async function tryImportIndexedDir (importFile: ImportFile, existingDir: string,
       alldirs.add(path.join(newDir, path.dirname(f)))
     })
   await Promise.all(
-    Array.from(alldirs).sort((d1, d2) => d1.length - d2.length).map((dir) => makeDir(dir)),
+    Array.from(alldirs).sort((d1, d2) => d1.length - d2.length).map((dir) => fs.mkdir(dir, { recursive: true })),
   )
   let allLinked = true
   await Promise.all(

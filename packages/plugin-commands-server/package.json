@@ -13,7 +13,7 @@
   "scripts": {
     "lint": "tslint -c tslint.json src/**/*.ts test/**/*.ts",
     "tsc": "rimraf lib && tsc",
-    "test": "pnpm run tsc && pnpm run lint",
+    "test": "pnpm run tsc && pnpm run lint && ts-node test --type-check",
     "prepublishOnly": "pnpm run tsc"
   },
   "repository": "https://github.com/pnpm/pnpm/blob/master/packages/plugin-commands-server",
@@ -30,12 +30,23 @@
   "devDependencies": {
     "@pnpm/logger": "^3.1.0",
     "@pnpm/plugin-commands-server": "link:",
+    "@pnpm/prepare": "workspace:0.0.0",
+    "@pnpm/registry-mock": "1.11.1",
+    "@pnpm/test-utils": "workspace:0.0.0",
+    "@types/byline": "4.2.31",
     "@types/common-tags": "^1.8.0",
+    "@types/cross-spawn": "6.0.1",
     "@types/is-windows": "^1.0.0",
     "@types/mz": "^2.7.0",
     "@types/ramda": "^0.26.38",
     "@types/signal-exit": "^3.0.0",
-    "rimraf": "3.0.0"
+    "byline": "5.0.0",
+    "cross-spawn": "7.0.1",
+    "execa": "4.0.0",
+    "p-any": "2.1.0",
+    "path-exists": "4.0.0",
+    "rimraf": "3.0.0",
+    "write-json-file": "4.2.1"
   },
   "dependencies": {
     "@pnpm/cli-utils": "workspace:0.2.5",

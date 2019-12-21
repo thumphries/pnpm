@@ -1,11 +1,11 @@
 import prepare from '@pnpm/prepare'
+import { retryLoadJsonFile } from '@pnpm/test-utils'
 import path = require('path')
 import pathExists = require('path-exists')
 import tape = require('tape')
 import promisifyTape from 'tape-promise'
 import {
   execPnpm,
-  retryLoadJsonFile,
   spawnPnpm,
 } from '../utils'
 

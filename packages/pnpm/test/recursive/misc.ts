@@ -1,5 +1,6 @@
 import { Lockfile } from '@pnpm/lockfile-types'
 import prepare, { preparePackages } from '@pnpm/prepare'
+import { retryLoadJsonFile } from '@pnpm/test-utils'
 import isCI = require('is-ci')
 import isWindows = require('is-windows')
 import fs = require('mz/fs')
@@ -11,7 +12,6 @@ import writeYamlFile = require('write-yaml-file')
 import {
   execPnpm,
   execPnpmSync,
-  retryLoadJsonFile,
   spawnPnpm,
 } from '../utils'
 

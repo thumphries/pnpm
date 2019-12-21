@@ -4867,7 +4867,7 @@ packages:
   /configstore/5.0.0:
     dependencies:
       dot-prop: 5.2.0
-      graceful-fs: 4.2.1
+      graceful-fs: 4.2.3
       make-dir: 3.0.0
       unique-string: 2.0.0
       write-file-atomic: 3.0.1

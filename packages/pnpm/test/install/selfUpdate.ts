@@ -11,7 +11,6 @@ import {
 
 const test = promisifyTape(tape)
 
-
 test('self-update stops the store server', async (t: tape.Test) => {
   const project = prepare(t)
 

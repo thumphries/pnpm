@@ -34,12 +34,12 @@ test('relative link', async (t: tape.Test) => {
 
   await ncp(pathToLocalPkg(linkedPkgName), linkedPkgPath)
   await link([`../${linkedPkgName}`], path.join(process.cwd(), 'node_modules'), await testDefaults({
+    dir: process.cwd(),
     manifest: {
       dependencies: {
         'hello-world-js-bin': '*',
       },
     },
-    dir: process.cwd(),
   }))
 
   await project.isExecutable('.bin/hello-world-js-bin')
@@ -91,8 +91,8 @@ test('relative link is not rewritten by argumentless install', async (t: tape.Te
     path.join(process.cwd(), 'node_modules'),
     {
       ...opts,
-      manifest: {},
       dir: process.cwd(),
+      manifest: {},
       reporter,
     }) // tslint:disable-line:no-any
 
@@ -129,8 +129,8 @@ test('relative link is rewritten by named installation to regular dependency', a
     path.join(process.cwd(), 'node_modules'),
     {
       ...opts,
-      manifest: {},
       dir: process.cwd(),
+      manifest: {},
       reporter,
     },
   )

@@ -12,6 +12,6 @@ const PNPM_PATH = path.join(__dirname, 'pnpm.js')
   }
   npx({
     ...npx.parseArgs(process.argv, PNPM_PATH),
-    installerStdio: 'inherit',
+    installerStdio: [0, 2, 2],
   })
 })()
